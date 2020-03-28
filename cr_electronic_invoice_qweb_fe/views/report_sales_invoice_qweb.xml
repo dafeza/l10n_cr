@@ -55,7 +55,7 @@
                     <span t-if="o.type == 'out_invoice' or o.type == 'out_refund'" t-esc="o.number_electronic and o.number_electronic[21:41] or o.number"/>
                 </div>
                 <div class="text-center">
-                    <table style="width:100%;" class="dtheader rounded2">
+                    <table t-if="o.date_issuance" style="width:100%;" class="dtheader rounded2">
                     <tr>
                         <td class="text-center">DÍA</td>
                         <td class="text-center">MES</td>
@@ -67,6 +67,14 @@
                         <td class="dtcls text-center dtbg"><span t-esc="o.date_issuance and (o.date_issuance[5:7]) or o.date_invoice and (o.date_invoice[5:7]) or ''"/></td>
                         <td class="dtcls text-center dtbg"><span t-esc="o.date_issuance and (o.date_issuance[0:4]) or o.date_invoice and (o.date_invoice[0:4]) or ''"/></td>
                         <td class="dtcls text-center dtbg"><span t-esc="o.date_issuance and (o.date_issuance[11:16]) or ''"/></td>
+                    </tr>
+                    </table>
+                    <table t-if="not o.date_issuance" style="width:100%;" class="dtheader rounded2">
+                    <tr>
+                        <td class="text-center">FECHA</td>
+                    </tr>
+                    <tr>
+                        <td class="dtcls text-center dtbg"><span t-esc="o.date_invoice or ''"/></td>
                     </tr>
                     </table>
                 </div>
@@ -353,12 +361,7 @@
                             </span>
                         </td>
                         <td>
-                            <span t-if="o.type == 'in_invoice' or o.type == 'in_refund'">
-                                <span t-field="o.create_uid.name"/>
-                            </span>
-                            <span t-if="o.type == 'out_invoice' or o.type == 'out_refund'">
-                                <span t-field="o.user_id.name"/>
-                            </span>
+                            <span t-field="o.user_id.name"/>
                         </td>
                         <td>
                             <strong>TIPO CAMBIO:</strong>
@@ -531,7 +534,7 @@
                     </t>
                 </div>
                 <p class="text-center" style="padding:2px 2px 2px 2px">
-                  Clave:<span t-field="o.number_electronic"/> // Usuario:<span t-field="o.create_uid.name"/><br/>
+                  Clave:<span t-field="o.number_electronic"/> // Usuario:<span t-field="o.user_id.name"/><br/>
                   Autorizada mediante resolución No DGT-R-033-2019 del 20 de junio de 2019</p>
             </t>
             <link href="http://fonts.googleapis.com/css?family=Droid+Sans" rel="stylesheet" type="text/css"/>
